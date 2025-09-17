@@ -6,12 +6,15 @@ import Servicios from "./components/Servicios";
     <>
       <Navbar />
 
-      <div id="inicio">
+      <div id="inicio" className="">
         <Home />
 
       </div>
 
-      <Servicios />
+      <div id="servicios"  >
+
+        <Servicios />
+      </div>
 
 
     </>

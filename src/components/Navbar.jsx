@@ -1,7 +1,7 @@
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import logo from "../assets/img/logo.png"; // Ajusta la ruta si tu logo está en otra carpeta
-import { navItems } from "../constants";   // Asegúrate que navItems esté exportado correctamente
+import logo from "../assets/img/logo.png";
+import { navItems } from "../constants";
 
 const Navbar = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
@@ -9,11 +9,11 @@ const Navbar = () => {
   const toggleNavbar = () => setMobileDrawerOpen(!mobileDrawerOpen);
 
   return (
-    <nav className="sticky top-0 z-50  backdrop-blur-lg border-b border-blue-400/40 bg-blue-900/70">
-      <div className="container px-4 mx-auto relative lg:text-sm">
-        <div className="flex justify-between items-center">
+    <nav className="sticky top-0 z-50 backdrop-blur-lg border-b border-blue-400/40 bg-blue-900/70">
+      <div className="max-w-7xl px-4 mx-auto relative lg:text-sm">
+        <div className="flex justify-between items-center py-3">
           <div className="flex items-center flex-shrink-0">
-            <img className="h-18 w-18 mr-3 object-contain" src={logo} alt="Logo" />
+            <img className="h-12 w-12 mr-3 object-contain" src={logo} alt="Logo" />
             <div className="flex flex-col">
               <span className="text-white text-2xl font-bold tracking-wide leading-none">FISCALIZATE!</span>
               <span className="text-blue-200 text-sm leading-tight">DE SANDOVAL & CO.</span>
@@ -28,18 +28,16 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-          <div className="lg:hidden md:flex flex-col justify-end">
-            <button onClick={toggleNavbar}>
+          <div className="lg:hidden flex flex-col justify-end">
+            <button onClick={toggleNavbar} aria-label="Abrir menú">
               {mobileDrawerOpen ? <X className="text-blue-200 w-8 h-8" /> : <Menu className="text-blue-200 w-8 h-8" />}
             </button>
           </div>
         </div>
 
-        {/* Animated dropdown menu */}
+        {/* Menú móvil animado */}
         <div
-          className={`mt-0
-            absolute top-full left-0 w-full z-40
-            flex flex-col items-center
+          className={`absolute top-full left-0 w-full z-40
             transition-all duration-300 ease-in-out
             ${mobileDrawerOpen
               ? 'opacity-100 translate-y-0 pointer-events-auto'
@@ -50,7 +48,6 @@ const Navbar = () => {
             overflow-hidden
           `}
         >
-          {/* Fondo extra para igualar el desenfoque */}
           <div className="absolute inset-0 bg-blue-900/80 backdrop-blur-xl -z-10 rounded-b-xl"></div>
           <ul className="flex flex-col items-center py-8 space-y-7 w-full relative z-10">
             {navItems.map((item, index) => (
