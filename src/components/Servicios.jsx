@@ -1,75 +1,73 @@
-import React, { useRef } from "react";
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { servicios } from "../constants";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Servicios = () => {
-  const scrollRef = useRef();
-  const cardWidth = 340 + 32; // ancho + gap
-  const infiniteServicios = [...servicios, ...servicios];
-
-  // Función para scrollear con flechas
-  const scroll = (dir) => {
-    if (!scrollRef.current) return;
-    scrollRef.current.scrollBy({
-      left: dir === "left" ? -cardWidth : cardWidth,
-      behavior: "smooth",
-    });
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 4,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
   };
 
   return (
-    <section id="servicios" className="w-full py-12 bg-gradient-to-b from-blue-900/60 to-blue-900/20">
-      <div className="max-w-6xl mx-auto px-4 relative">
-        <h2 className="text-white text-3xl md:text-4xl font-bold mb-10 text-center">Nuestros Servicios</h2>
-        {/* Flechas */}
-        <button
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-blue-900/80 rounded-full p-3 shadow-lg hover:bg-blue-600 transition hidden md:block"
-          onClick={() => scroll("left")}
-          aria-label="Scroll left"
-        >
-          <ChevronLeft className="text-white w-8 h-8" />
-        </button>
-        <button
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-blue-900/80 rounded-full p-3 shadow-lg hover:bg-blue-600 transition hidden md:block"
-          onClick={() => scroll("right")}
-          aria-label="Scroll right"
-        >
-          <ChevronRight className="text-white w-8 h-8" />
-        </button>
-        <div className="overflow-hidden">
-          <div
-            ref={scrollRef}
-            className="flex gap-8 overflow-x-auto scrollbar-none cursor-grab select-none"
-            style={{
-              width: `${infiniteServicios.length * 372}px`,
-              scrollBehavior: "smooth",
-            }}
-          >
-            {infiniteServicios.map((servicio, idx) => (
-              <div
-                key={idx + servicio.nombre}
-                className="min-w-[340px] max-w-[340px] bg-blue-900/90 rounded-2xl shadow-lg flex flex-col items-center px-6 py-8 mx-auto transition hover:scale-105"
-              >
-                <img
-                  src={servicio.img}
-                  alt={servicio.nombre}
-                  className="w-full h-44 object-cover rounded-xl mb-6"
-                />
-                <h3 className="text-white text-xl md:text-2xl font-bold text-center mb-3">{servicio.nombre}</h3>
-                <p className="text-blue-100 text-base md:text-lg text-center mb-4">{servicio.descripcion}</p>
-                <ul className="mb-6 text-blue-200 text-sm list-disc list-inside text-left">
-                  {servicio.subservicios.map((sub, i) => (
-                    <li key={i}>{sub}</li>
-                  ))}
-                </ul>
-                <button className="bg-green-700 hover:bg-green-800 text-white font-semibold px-8 py-2 rounded-xl shadow transition">
-                  Solicitar
+    <div className="w-3/4 m-auto " id="servicios">
+      <div className="mt-20  ">
+        <Slider {...settings}>
+          {servicios.map((s) => (
+            <div
+              className="bg-white text-black rounded-xl min-w-0
+                h-[450px] sm:h-[500px] xs:h-[350px] flex flex-col justify-between"
+              key={s.nombre}
+            >
+              <div>
+                <div className="h-56 xs:h-40 rounded-t-xl bg-indigo-500 flex justify-center items-center">
+                  <img src={s.img} alt="" className="m-5 h-auto w-70 rounded-2xl max-h-40 xs:max-h-28" />
+                </div>
+                <div className="flex flex-col justify-center items-center gap-4 p-4">
+                  <p className="text-xl font-semibold xs:text-lg">{s.nombre}</p>
+                  <p className="text-base xs:text-sm">{s.descripcion}</p>
+                </div>
+              </div>
+              <div className="flex justify-center items-end pb-6">
+                <button className="bg-indigo-500 text-white text-lg xs:text-base px-6 py-1 rounded-xl">
+                  Ver mas
                 </button>
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          ))}
+        </Slider>
       </div>
-    </section>
+    </div>
   );
 };
 

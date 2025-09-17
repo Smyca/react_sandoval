@@ -34,12 +34,7 @@ a {
   display: none; /* Chrome, Safari, Opera */
 }
 
-/* @keyframes carrusel {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
 
-.animate-carrusel {
-  animation: carrusel 40s linear infinite;
+.slick-slide > div {
+  margin: 0 10px;
 }
- */
