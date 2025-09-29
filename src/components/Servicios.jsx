@@ -14,7 +14,7 @@ const Servicios = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
           infinite: true,
           dots: true
@@ -46,13 +46,13 @@ const Servicios = () => {
         <Slider {...settings} >
           {servicios.map((s) => (
             <div
-              className="mt-10 relative bg-white text-black rounded-xl min-w-0
+              className="mt-5  text-center relative bg-white text-black rounded-xl min-w-0
                 h-[550px] sm:h-[500px] xs:h-[350px] flex flex-col justify-between"
               key={s.nombre} 
             >
               <div > 
-                <div className="h-56 xs:h-40 rounded-t-xl backdrop-blur bg-blue-900/70 flex justify-center items-center">
-                  <img src={s.img} alt="" className="m-5 h-auto w-70 rounded-2xl max-h-40 xs:max-h-28" />
+                <div className="h-52 w-full rounded-lg backdrop-blur bg-blue-900/70 flex justify-center items-center">
+                  <img src={s.img} alt="" className="h-52 rounded-sm w-full max-h-52 xs:max-h-52" />
                 </div>
                 <div className="flex flex-col justify-center items-center gap-4 p-4">
                   <p className="text-xl font-semibold xs:text-lg">{s.nombre}</p>
@@ -60,7 +60,7 @@ const Servicios = () => {
                 </div>
               </div>
              
-              <div  className="absolute tall:bottom-10   flex justify-center w-full">
+              <div  className="absolute sm:bottom-4 bottom-8 flex justify-center w-full">
                 <button className="backdrop-blur bg-blue-900/70 text-white text-lg xs:text-base px-6 py-1 rounded-xl">
                   Ver mas
                 </button>
