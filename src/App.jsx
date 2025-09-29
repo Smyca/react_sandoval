@@ -1,3 +1,4 @@
+import Contacto from "./components/Contacto";
 import Home  from "./components/Home";
 import Navbar from "./components/Navbar";
 import Servicios from "./components/Servicios";
@@ -15,6 +16,14 @@ import Servicios from "./components/Servicios";
 
         <Servicios />
       </div>
+
+      <div id="contacto"  >
+
+        <Contacto />
+      </div>
+
+
+
 
 
     </>

@@ -9,7 +9,7 @@ const Navbar = () => {
   const toggleNavbar = () => setMobileDrawerOpen(!mobileDrawerOpen);
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur-lg border-b border-blue-400/40 bg-blue-900/70">
+    <nav className="sticky top-0 z-50 backdrop-blur-md border-b-1 border-blue-400/40 bg-blue-900/50">
       <div className="w-full px-4 mx-auto relative lg:text-sm">
         <div className="flex justify-between items-center py-3">
           <div className="flex items-center flex-shrink-0">

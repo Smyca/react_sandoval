@@ -12,7 +12,6 @@ import _equipo from "../assets/img/equipo.jpg";
 import inicioAct from "../assets/img/inicio_act.jfif";
 import _logo from "../assets/img/logo.png";
 import _service from "../assets/img/service.jpeg";
-import _test2 from "../assets/img/test-2.jpg";
 import _test1 from "../assets/img/test1.jpg";
 
 

@@ -46,13 +46,13 @@ const Servicios = () => {
         <Slider {...settings} >
           {servicios.map((s) => (
             <div
-              className="mt-5  text-center relative bg-white text-black rounded-xl min-w-0
+              className="mt-5 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:[box-shadow:0_0_5px_1px_rgba(255,255,255,0.6)] text-center relative bg-white text-black cursor-pointer rounded-xl min-w-0
                 h-[550px] sm:h-[500px] xs:h-[350px] flex flex-col justify-between"
               key={s.nombre} 
             >
               <div > 
-                <div className="h-52 w-full rounded-lg backdrop-blur bg-blue-900/70 flex justify-center items-center">
-                  <img src={s.img} alt="" className="h-52 rounded-sm w-full max-h-52 xs:max-h-52" />
+                <div className="h-52 w-full rounded-xl backdrop-blur bg-blue-900/70 flex justify-center items-center">
+                  <img src={s.img} alt="" className="h-52 rounded-t-xl w-full max-h-52 xs:max-h-52" />
                 </div>
                 <div className="flex flex-col justify-center items-center gap-4 p-4">
                   <p className="text-xl font-semibold xs:text-lg">{s.nombre}</p>
