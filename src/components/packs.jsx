@@ -35,7 +35,7 @@ const Packs = () => {
                             <div
                                 key={p.nombre}
                                 className={`mt-5 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:[box-shadow:0_0_5px_1px_rgba(255,255,255,0.6)]
-                                 text-center relative rounded-xl min-w-0 h-[550px] sm:h-[auto]
+                                 text-center relative rounded-xl min-w-0 h-auto sm:h-[auto]
                                   xs:h-[350px] flex flex-col justify-between ${p.colorFondo}`}
                             >
                                 <div>
