@@ -2,6 +2,7 @@ import Contacto from "./components/Contacto";
 import Home  from "./components/Home";
 import Navbar from "./components/Navbar";
 import Servicios from "./components/Servicios";
+import Packs from './components/packs'
  const App = () => {
   return (
     <>
@@ -15,6 +16,10 @@ import Servicios from "./components/Servicios";
       <div id="servicios"  >
 
         <Servicios />
+      </div>
+      <div id="packs">
+
+        <Packs/>  
       </div>
 
       <div id="contacto"  >

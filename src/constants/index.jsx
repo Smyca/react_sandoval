@@ -1,8 +1,3 @@
-
-
-
-
-
 import img1 from "../assets/img/Img-1.jpg";
 import _blue from "../assets/img/blue.jpg";
 import _home from "../assets/img/home.jpg";
@@ -84,8 +79,74 @@ export const servicios = [
 export const navItems = [
   { label: "Inicio", href: "#inicio" },
   { label: "Servicios", href: "#servicios" },
+  { label: "Packs", href: "#packs" },
+
                // Sobre el equipo de contadores
   { label: "Preguntas Frecuentes", href: "#faq" },      // FAQ sobre temas contables y tributarios
           // Blog, artículos, descargas, etc.
   { label: "Contacto", href: "#contacto" }             // Formulario o datos de contacto
+];
+
+export const packs = [
+  {
+    nombre: "Pack Emprendedor",
+    icono: "🚀",
+    colorFondo: "bg-orange-100",
+    colorTexto: "text-orange-800", // Color oscuro para el nombre
+    descripcion: "Ideal para iniciar tu negocio de forma rápida y correcta.",
+    beneficios: [
+      'Constitución de empresa en "Tu Empresa en un Día".',
+      "Redacción de estatutos y asesoría en régimen tributario.",
+      "Inicio de actividades ante el SII y obtención de RUT.",
+      "Primer mes de contabilidad mensual gratis.",
+      "Asesoría en facturación electrónica y documentos tributarios.",
+    ],
+    precio: "CLP $79.990 (promocional)",
+  },
+  {
+    nombre: "Pack Pyme Tranquila", 
+    icono: "🏢📊",
+    colorFondo: "bg-blue-100",
+    colorTexto: "text-blue-800", // Color oscuro para el nombre
+    descripcion: "Para pequeñas empresas que quieren cumplir sin preocupaciones.",
+    beneficios: [
+      "Contabilidad mensual por 3 meses.",
+      "Declaración de IVA (F29) incluida por 3 meses.",
+      "Elaboración de estados financieros básicos.",
+      "Asesoría tributaria inicial para optimización de impuestos.",
+      "20% de descuento en Declaración de Renta Anual.",
+      "Reunión virtual para aclarar dudas.",
+    ],
+    precio: "CLP $99.990 (promocional)",
+  },
+  {
+    nombre: "Pack Profesional",
+    icono: "👨‍⚕️👩‍💻", 
+    colorFondo: "bg-green-100",
+    colorTexto: "text-green-800", // Color oscuro para el nombre
+    descripcion: "Pensado para profesionales independientes.",
+    beneficios: [
+      "Inicio de actividades como persona natural (segunda categoría).",
+      "Obtención de RUT y Clave Tributaria.",
+      "Inscripción para emisión de boletas de honorarios electrónicas.",
+      "Capacitación virtual sobre retenciones y pagos provisionales.",
+      "20% de descuento en Declaración de Renta Anual.",
+    ],
+    precio: "CLP $29.990 (promocional)",
+  },
+  {
+    nombre: "Pack Renta y Cumplimiento Fiscal",
+    icono: "🏦✅",
+    colorFondo: "bg-purple-100",
+    colorTexto: "text-purple-800", // Color oscuro para el nombre
+    descripcion: "Para quienes necesitan cumplir sus obligaciones tributarias sin errores.",
+    beneficios: [
+      "Declaración de Renta (Formulario 22) para primera categoría.",
+      "Presentación de Declaraciones Juradas (según corresponda).",
+      "Análisis y optimización de impuestos.",
+      "Regularización de observaciones con el SII.",
+      "Asesoría personalizada en planificación tributaria.",
+    ],
+    precio: "CLP $49.990 - $74.990 (según situación tributaria)",
+  },
 ];
