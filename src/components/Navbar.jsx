@@ -1,24 +1,32 @@
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import logo from "../assets/img/logo.png";
 import { navItems } from "../constants";
 
 const Navbar = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const location = useLocation();
+  const isServiciosPage = location.pathname === '/servicios';
 
   const toggleNavbar = () => setMobileDrawerOpen(!mobileDrawerOpen);
 
+  const navbarBg = isServiciosPage ? 'bg-blue-900/80' : 'bg-blue-900/50';
+
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur-md border-b-1 border-blue-400/40 bg-blue-900/50">
+    <nav className={`sticky top-0 z-50 backdrop-blur-md border-b-1 border-blue-400/40 ${navbarBg}`}>
       <div className="w-full px-4 mx-auto relative lg:text-sm">
         <div className="flex justify-between items-center py-3">
-          <div className="flex items-center flex-shrink-0">
-            <img className="h-12 w-12 mr-3 object-contain" src={logo} alt="Logo" />
-            <div className="flex flex-col">
-              <span className="text-white text-2xl font-bold tracking-wide leading-none">FISCALIZATE!</span>
-              <span className="text-blue-200 text-sm leading-tight">DE SANDOVAL & CO.</span>
+          <a href="/">
+            <div className="flex items-center flex-shrink-0">
+              <img className="h-12 w-12 mr-3 object-contain" src={logo} alt="Logo" />
+              <div className="flex flex-col">
+                <span className="text-white text-2xl font-bold tracking-wide leading-none">FISCALIZATE!</span>
+                <span className="text-blue-200 text-sm leading-tight">DE SANDOVAL & CO.</span>
+              </div>
             </div>
-          </div>
+          </a>
+            
           <ul className="hidden lg:flex ml-14 space-x-12">
             {navItems.map((item, index) => (
               <li key={index}>

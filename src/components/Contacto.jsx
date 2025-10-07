@@ -7,26 +7,15 @@ const Contacto = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    servicio: '',
-    subServicio: '',
+    phone: '',
     desc: ''
   });
 
   // Estado para el botón de envío
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Definición de subservicios por cada servicio
-  const subServicios = {
-    "Creacion de empresa": ["CDE1", "CDE2", "CDE3"],
-    "Inicio de Actividades": ["IDA1", "IDA2", "IDA3"],
-    "Declaracion de formulario 29 (IVA)": ["DDF1", "DDF2", "DDF3"],
-    "Declaraciones Juradas": ["DJ1", "DJ2", "DJ3"],
-    "Declaración Renta Segunda Categoria": ["DRS1", "DRS2", "DRS3"],
-    "Contabilidad bajo normas PCGA": ["CBN1", "CBN2", "CBN3"],
-  };
-
-  // Estado para los subservicios disponibles
-  const [subServiciosDisponibles, setSubServiciosDisponibles] = useState([]);
+  
+  // Estado para mostrar mensaje de éxito
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   // Manejar cambios en los inputs
   const handleInputChange = (e) => {
@@ -36,17 +25,6 @@ const Contacto = () => {
       ...prev,
       [name]: value
     }));
-
-    // Si cambia el servicio, actualizar los subservicios disponibles
-    if (name === 'servicio') {
-      const subserviciosParaServicio = subServicios[value] || [];
-      setSubServiciosDisponibles(subserviciosParaServicio);
-      // Limpiar el subservicio seleccionado cuando cambia el servicio
-      setFormData(prev => ({
-        ...prev,
-        subServicio: ''
-      }));
-    }
   };
 
   // Manejar envío del formulario con EmailJS
@@ -54,32 +32,51 @@ const Contacto = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Configuración de EmailJS
-    const serviceID = 'default_service';
-    const templateID = 'template_ltvn51p';
+    // Configuración de EmailJS - PARÁMETROS ACTUALIZADOS
+    const serviceID = 'service_i23f6pu';
+    const templateID = 'template_cx7tkoc';
     const publicKey = 'diVD480gsK4wCyPBO';
 
     // Inicializar EmailJS
     emailjs.init(publicKey);
 
-    // Enviar el formulario
-    emailjs.sendForm(serviceID, templateID, e.target)
+    // Preparar datos para EmailJS
+    const templateParams = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone || 'No proporcionado',
+      desc: formData.desc,
+      current_date: new Date().toLocaleString('es-CL', {
+        timeZone: 'America/Santiago',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+    };
+
+    emailjs.send(serviceID, templateID, templateParams)
       .then(() => {
         setIsSubmitting(false);
-        alert('¡Email enviado exitosamente!');
+        setShowSuccessMessage(true);
+        
         // Limpiar formulario
         setFormData({
           name: '',
           email: '',
-          servicio: '',
-          subServicio: '',
+          phone: '',
           desc: ''
         });
-        setSubServiciosDisponibles([]);
+
+        // Ocultar mensaje después de 5 segundos
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+        }, 5000);
       })
       .catch((error) => {
         setIsSubmitting(false);
-        alert('Error al enviar email: ' + JSON.stringify(error));
+        alert('Error al enviar mensaje. Por favor, intente nuevamente.');
         console.error('EmailJS error:', error);
       });
   };
@@ -88,124 +85,137 @@ const Contacto = () => {
     <section className='min-h-screen flex justify-center bg-cover bg-center'
     style={{backgroundImage:`url(${imgcontact})`}}>
 
-        <div className=' flex-col md:flex-row w-full bg-black/80 border border-blue-400/30  backdrop-blur-sm min-h-screen h-auto flex justify-around'>
+        <div className='flex-col md:flex-row w-full bg-black/80 border border-blue-400/30 backdrop-blur-sm min-h-screen h-auto flex justify-around'>
+            {/* Información de contacto */}
             <div className="flex justify-center md:mt-16 min-w-[280px] md:max-w-sm w-full mb-8 md:mb-0">
                 <ul className="list-none space-y-5">
-                <li>
-                    <h1 className="text-white text-4xl md:text-5xl font-bold mb-5 mt-10 md:-mt-2">¡Contáctanos!</h1>
+                    <li>
+                        <h1 className="text-white text-4xl md:text-5xl font-bold mb-5 mt-10 md:-mt-2">¡Contáctanos!</h1>
+                        <div className="border-t border-blue-400 my-2 w-full" />
+                    </li>
+                    <li className="text-2xl md:text-2xl text-white break-all text-center">contacto@fiscalizate.cl</li>
                     <div className="border-t border-blue-400 my-2 w-full" />
-                </li>
-                <li className=" text-2xl md:text-2xl text-white break-all text-center">contacto@fiscalizate.cl</li>
-                <div className="border-t border-blue-400 my-2 w-full" />
-                <li className="text-2xl md:text-2xl text-white text-center">+569 00000000</li>
-                <div className="border-t border-blue-400 my-2 w-auto" />
-                <li className=" text-2xl md:text-2xl text-center text-white">
-                    Lunes a Viernes<br />
-                    de 09:00 a 18:00 Horas.
-                </li>
+                    <li className="text-2xl md:text-2xl text-white text-center">+569 00000000</li>
+                    <div className="border-t border-blue-400 my-2 w-auto" />
+                    <li className="text-2xl md:text-2xl text-center text-white">
+                        Lunes a Viernes<br />
+                        de 09:00 a 18:00 Horas.
+                    </li>
                 </ul>
             </div>
                 
-            <div className=' p-5'>
+            {/* Formulario simplificado */}
+            <div className='p-5'>
                 <form
-                id="form"
-                method="POST"
-                className="mx-auto mt-5 p-5 rounded-lg shadow-sm bg-[rgba(8,21,56,0.7)] backdrop-blur-md max-w-md w-full"
-                onSubmit={handleSubmit}
+                    id="form"
+                    method="POST"
+                    className="mx-auto mt-5 p-6 rounded-lg shadow-lg bg-[rgba(8,21,56,0.85)] backdrop-blur-md max-w-md w-full"
+                    onSubmit={handleSubmit}
                 >
-                <h1 className="text-center text-white text-2xl font-semibold mb-4">Contacto</h1>
+                    <h1 className="text-center text-white text-2xl font-semibold mb-6">Contacto</h1>
 
-                <div className="mb-3">
-                    <label htmlFor="name" className="block text-white mb-1">Nombre</label>
-                    <input
-                    name="name"
-                    type="text"
-                    id="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className=" text-black block w-[95%] mx-auto px-3 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-blue-400 outline-none bg-white/80"
-                    />
-                </div>
+                    {/* Mensaje de éxito */}
+                    {showSuccessMessage && (
+                        <div className="mb-6 p-4 bg-green-500/20 border border-green-400 rounded-lg backdrop-blur-sm">
+                            <div className="flex items-center">
+                                <div className="flex-shrink-0">
+                                    <svg className="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div className="ml-3">
+                                    <h3 className="text-sm font-medium text-green-300">
+                                        ¡Mensaje enviado exitosamente!
+                                    </h3>
+                                    <p className="text-sm text-green-200 mt-1">
+                                        Serás contactado a la brevedad. Nuestro equipo se comunicará contigo dentro de las próximas 24 horas.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
-                <div className="mb-3">
-                    <label htmlFor="email" className="block text-white mb-1">Email</label>
-                    <input
-                    name="email"
-                    type="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="text-black block w-[95%] mx-auto px-3 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-blue-400 outline-none bg-white/80"
-                    />
-                </div>
+                    {/* Nombre y Apellido */}
+                    <div className="mb-4">
+                        <label htmlFor="name" className="block text-white mb-2 font-medium">
+                            Nombre y Apellido:
+                        </label>
+                        <input
+                            name="name"
+                            type="text"
+                            id="name"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                            required
+                            placeholder="Su Nombre*"
+                            className="text-black block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 outline-none bg-white/90 placeholder-gray-500"
+                        />
+                    </div>
 
-                <div className="mb-3 ">
-                    <label htmlFor="servicio" className="block text-white mb-1">Servicio</label>
-                    <select
-                    id="servicio"
-                    name="servicio"
-                    value={formData.servicio}
-                    onChange={handleInputChange}
-                    className=" text-black block w-[95%] mx-auto px-3 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-blue-400 outline-none bg-white/80"
-                    >
-                    <option value="" disabled>Seleccione servicio</option>
-                    <option value="Creacion de empresa">Creacion de empresa</option>
-                    <option value="Inicio de Actividades">Inicio de Actividades</option>
-                    <option value="Declaracion de formulario 29 (IVA)">Declaracion de formulario 29 (IVA)</option>
-                    <option value="Declaraciones Juradas">Declaraciones Juradas</option>
-                    <option value="Declaración Renta Segunda Categoria">Declaración Renta Segunda Categoría</option>
-                    <option value="Contabilidad bajo normas PCGA">Contabilidad bajo normas PCGA</option>
-                    </select>
-                </div>
+                    {/* Correo de Contacto */}
+                    <div className="mb-4">
+                        <label htmlFor="email" className="block text-white mb-2 font-medium">
+                            Correo de Contacto:
+                        </label>
+                        <input
+                            name="email"
+                            type="email"
+                            id="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            required
+                            placeholder="Su Email*"
+                            className="text-black block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 outline-none bg-white/90 placeholder-gray-500"
+                        />
+                    </div>
 
-                <div className="mb-3">
-                    <label htmlFor="subServicio" className="block text-white mb-1">Subservicio</label>
-                    <select
-                    name="subServicio"
-                    id="subServicio"
-                    value={formData.subServicio}
-                    onChange={handleInputChange}
-                    className="text-black block w-[95%] mx-auto px-3 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-blue-400 outline-none bg-white/80"
-                    >
-                    <option value="" disabled>
-                        {formData.servicio ? 'Seleccione subservicio' : 'Primero seleccione un servicio'}
-                    </option>
-                    {subServiciosDisponibles.map((subServicio, index) => (
-                        <option key={index} value={subServicio}>
-                            {subServicio}
-                        </option>
-                    ))}
-                    </select>
-                </div>
+                    {/* Teléfono */}
+                    <div className="mb-4">
+                        <label htmlFor="phone" className="block text-white mb-2 font-medium">
+                            Teléfono:
+                        </label>
+                        <input
+                            name="phone"
+                            type="tel"
+                            id="phone"
+                            value={formData.phone}
+                            onChange={handleInputChange}
+                            placeholder="Su número de teléfono*"
+                            className="text-black block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 outline-none bg-white/90 placeholder-gray-500"
+                        />
+                    </div>
 
-                <div className="mb-3">
-                    <label htmlFor="desc" className="block text-white mb-1">Descripcion</label>
-                    <textarea
-                    name="desc"
-                    id="desc"
-                    value={formData.desc}
-                    onChange={handleInputChange}
-                    required
-                    rows={4}
-                    className="text-black block w-[95%] mx-auto px-3 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-blue-400 outline-none bg-white/80 resize-none h-[100px]"
-                    ></textarea>
-                </div>
+                    {/* Mensaje */}
+                    <div className="mb-6">
+                        <label htmlFor="desc" className="block text-white mb-2 font-medium">
+                            Mensaje:
+                        </label>
+                        <textarea
+                            name="desc"
+                            id="desc"
+                            value={formData.desc}
+                            onChange={handleInputChange}
+                            required
+                            rows={5}
+                            placeholder="Dudas o consultas..."
+                            className="text-black block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 outline-none bg-white/90 resize-none placeholder-gray-500"
+                        />
+                    </div>
 
-                <div className="flex justify-center mb-2">
-                    <input
-                    type="submit"
-                    id="btn-enviar"
-                    value={isSubmitting ? 'Enviando...' : 'Enviar email'}
-                    disabled={isSubmitting}
-                    className={`${
-                      isSubmitting 
-                        ? 'bg-gray-600 cursor-not-allowed' 
-                        : 'bg-blue-700 hover:bg-blue-800'
-                    } text-white font-semibold px-6 py-2 rounded cursor-pointer transition-colors duration-200`}
-                    />
-                </div>
+                    {/* Botón de envío */}
+                    <div className="flex justify-center">
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className={`w-full py-3 px-6 rounded-lg font-semibold text-white transition-all duration-200 ${
+                                isSubmitting 
+                                    ? 'bg-gray-600 cursor-not-allowed' 
+                                    : 'bg-green-600 hover:bg-green-700 active:scale-95'
+                            }`}
+                        >
+                            {isSubmitting ? 'Enviando...' : 'Enviar Mensaje'}
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

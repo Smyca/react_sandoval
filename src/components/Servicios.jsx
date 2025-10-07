@@ -2,8 +2,11 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { servicios } from "../constants";
+import { useNavigate } from "react-router-dom";
 
 const Servicios = () => {
+  const navigate = useNavigate();
+
   const settings = {
     infinite: true,
     speed: 500,
@@ -20,8 +23,6 @@ const Servicios = () => {
           dots: true
         }
       },
-
-      
       {
         breakpoint: 600,
         settings: {
@@ -40,17 +41,36 @@ const Servicios = () => {
     ]
   };
 
+  // Función para generar el ID de la sección
+  const generateSectionId = (nombre) => {
+    return nombre.toLowerCase()
+      .replace(/\s+/g, '-')           // Espacios por guiones
+      .replace(/á/g, 'a')             // Reemplazar acentos ANTES de eliminar caracteres especiales
+      .replace(/é/g, 'e')
+      .replace(/í/g, 'i')
+      .replace(/ó/g, 'o')             // Esto cambiará "creación" → "creacion"
+      .replace(/ú/g, 'u')
+      .replace(/ñ/g, 'n')
+      .replace(/[^\w-]/g, '');        // Eliminar caracteres especiales AL FINAL
+  };
+
+  // Función para manejar la navegación
+  const handleVerMas = (servicioNombre) => {
+    const sectionId = generateSectionId(servicioNombre);
+    navigate(`/servicios?section=${sectionId}`);
+  };
+
   return (
-    <div className="w-3/4 m-auto min-h-screen mt-2"  >
-      <div className=" " >
-        <Slider {...settings} >
+    <div className="w-3/4 m-auto min-h-screen mt-2">
+      <div className="">
+        <Slider {...settings}>
           {servicios.map((s) => (
             <div
               className="mt-5 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:[box-shadow:0_0_5px_1px_rgba(255,255,255,0.6)] text-center relative bg-white text-black cursor-pointer rounded-xl min-w-0
                 h-[550px] sm:h-[500px] xs:h-[350px] flex flex-col justify-between"
-              key={s.nombre} 
+              key={s.nombre}
             >
-              <div > 
+              <div>
                 <div className="h-52 w-full rounded-xl backdrop-blur bg-blue-900/70 flex justify-center items-center">
                   <img src={s.img} alt="" className="h-52 rounded-t-xl w-full max-h-52 xs:max-h-52" />
                 </div>
@@ -59,14 +79,15 @@ const Servicios = () => {
                   <p className="text-base xs:text-sm">{s.descripcion}</p>
                 </div>
               </div>
-             
-              <div  className="absolute sm:bottom-4 bottom-8 flex justify-center w-full">
-                <button className="backdrop-blur bg-blue-900/70 text-white text-lg xs:text-base px-6 py-1 rounded-xl">
-                  Ver mas
-                </button>
 
+              <div className="absolute sm:bottom-4 bottom-8 flex justify-center w-full">
+                <button 
+                  onClick={() => handleVerMas(s.nombre)}
+                  className="backdrop-blur bg-blue-900/70 hover:bg-blue-800/80 text-white text-lg xs:text-base px-6 py-1 rounded-xl transition-colors duration-200"
+                >
+                  Ver más
+                </button>
               </div>
-              
             </div>
           ))}
         </Slider>
